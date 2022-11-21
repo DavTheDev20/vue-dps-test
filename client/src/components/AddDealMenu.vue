@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { Deal } from 'interfaces';
 export default defineComponent({
   data() {
     return {
