@@ -54,10 +54,10 @@
         </tbody>
         <tfoot>
             <tr>
-                <td>Total</td>
+                <td><strong>Total</strong></td>
                 <td></td>
                 <td></td>
-                <td>${{dealsTotal.toLocaleString()}}</td>
+                <td><strong>${{dealsTotal.toLocaleString()}}</strong></td>
                 <td></td>
             </tr>
         </tfoot>
