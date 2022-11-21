@@ -6,6 +6,28 @@
         // Define types as shown below
         props: {
             deals: Array<Deal>
+        },
+        data() {
+            return {
+                dealsTotal: 0
+            }
+        },
+        methods:  {
+            getTotal() {
+                let total = 0;
+                this.deals?.map(deal => {
+                    total += deal.balance;
+                })
+                this.dealsTotal = total;
+            }
+        },
+        mounted() {
+            this.getTotal();
+        },
+        watch: {
+            deals() {
+                this.getTotal();
+            }
         }
     })
 </script>
@@ -24,12 +46,21 @@
         <tbody>
             <tr v-for="deal in deals" key="deal.id">
                 <td>{{deal.id}}</td>
-                <td>{{deal.accountName}}</td>
+                <td><a href="#">{{deal.accountName}}</a></td>
                 <td>{{deal.relationshipManager}}</td>
                 <td>${{deal.balance.toLocaleString()}}</td>
-                <td>{{deal.dealDate.toLocaleDateString()}}</td>
+                <td>{{new Date(deal.dealDate).toDateString()}}</td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td>${{dealsTotal.toLocaleString()}}</td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
 </template>
 

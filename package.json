@@ -1,0 +1,26 @@
+{
+  "name": "vue-dps-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd server && npm run server",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently -n \"server,client\" -c \"red,blue\" \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavTheDev20/vue-dps-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavTheDev20/vue-dps-test/issues"
+  },
+  "homepage": "https://github.com/DavTheDev20/vue-dps-test#readme",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

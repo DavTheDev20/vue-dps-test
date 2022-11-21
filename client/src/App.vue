@@ -2,16 +2,7 @@
 import { defineComponent } from 'vue';
 import Table from "./components/Table.vue";
 import AddDealMenu from './components/AddDealMenu.vue';
-
-const sampleDeals = [
-        {
-          id: 1,
-          accountName: "WILMINGTON TRUST NA",
-          relationshipManager: "DAVIN REID",
-          balance: 1000000,
-          dealDate: new Date(2005, 6, 23)
-        }
-      ];
+import type { Deal } from 'interfaces';
 
 export default defineComponent({
   components: {
@@ -20,12 +11,26 @@ export default defineComponent({
   },
   data() {
     return {
-      dealsArr: sampleDeals
+      dealsArr: [],
+      showMenu: false
     }
   },
   methods: {
-    handleAddNewDeal() {
-      return alert("Worked")
+    handleShowMenu() {
+      this.showMenu = !this.showMenu;
+    },
+    async getDealData() {
+      const res = await fetch("http://localhost:8080/api/deals");
+      const data: any = await res.json();
+      this.dealsArr = data.deals;
+    },
+  },
+  mounted() {
+    this.getDealData();
+  },
+  watch: {
+    showMenu() {
+      this.getDealData();
     }
   }
 })
@@ -33,9 +38,10 @@ export default defineComponent({
 
 <template>
   <h1>Vue DPS</h1>
-  <button class="add-deals-btn" v-bind:onClick="handleAddNewDeal">Add Deals</button>
+  <button v-if="!showMenu" class="add-deals-btn" v-bind:onClick="handleShowMenu">Add Deals</button>
+  <button v-else class="add-deals-btn" v-bind:onClick="handleShowMenu">Go Back</button>
   <Table :deals="dealsArr" />
-  <AddDealMenu />
+  <AddDealMenu v-if="showMenu"/>
 </template>
 
 <style scoped>
@@ -45,12 +51,13 @@ export default defineComponent({
   }
 
   .add-deals-btn {
-    padding: 7px;
+    padding: 10px;
     margin: 0 0 1% 2%;
     background-color: #33b249;
     border: none;
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.05rem;
   }
 </style>
