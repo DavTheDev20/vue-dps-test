@@ -16,9 +16,11 @@ const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const sequelize_1 = require("sequelize");
+const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
 const sequelize = new sequelize_1.Sequelize('sqlite://../server/src/database/main.db');
+const NODE_ENV = process.env.NODE_ENV || 'development';
 const Deal = sequelize.define('Deal', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -60,4 +62,11 @@ app.post('/api/deals', (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(400).json({ success: false, error: err });
     }
 }));
+if (NODE_ENV === 'production') {
+    console.log('App running in production mode.');
+    app.use('/', express_1.default.static(path_1.default.join(__dirname, '../../', 'client', 'dist')));
+    app.get('/', (req, res) => {
+        res.sendFile('/');
+    });
+}
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));

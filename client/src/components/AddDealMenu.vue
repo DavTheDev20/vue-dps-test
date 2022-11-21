@@ -6,6 +6,7 @@ export default defineComponent({
       accountName: '',
       relationshipManager: '',
       balance: '',
+      viewDialogue: false
     };
   },
   methods: {
@@ -32,6 +33,10 @@ export default defineComponent({
         this.accountName = '';
         this.relationshipManager = '';
         this.balance = '';
+        this.viewDialogue = true;
+        setTimeout(() => {
+          this.viewDialogue = false;
+        }, 2500)
       } else {
         alert(data.error);
       }
@@ -71,6 +76,7 @@ export default defineComponent({
       <label>Deal Balance: </label>
       <input :value="balance" @input="oninput" type="text" name="balance" />
       <button>Submit</button>
+      <small v-if="viewDialogue">Added new deal, close to view deal.</small>
     </form>
   </div>
 </template>
@@ -96,6 +102,7 @@ export default defineComponent({
 form {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 input[type='text'] {
@@ -106,5 +113,10 @@ input[type='text'] {
 }
 button {
     cursor: pointer;
+}
+
+small {
+  color: white;
+  margin-top: 5%;
 }
 </style>

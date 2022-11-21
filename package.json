@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd server && npm run server",
     "client": "cd client && npm run dev",
-    "dev": "concurrently -n \"server,client\" -c \"red,blue\" \"npm run server\" \"npm run client\""
+    "dev": "concurrently -n \"server,client\" -c \"red,blue\" \"npm run server\" \"npm run client\"",
+    "build-client": "cd client && npm run build",
+    "production": "echo 'Building Frontend...' && npm run build-client && NODE_ENV=production node ./server/src/server.js"
   },
   "repository": {
     "type": "git",

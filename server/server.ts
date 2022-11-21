@@ -2,10 +2,12 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import { Sequelize, Model, DataTypes } from 'sequelize';
+import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 const sequelize = new Sequelize('sqlite://../server/src/database/main.db');
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 interface DealModel {
   id: number;
@@ -62,5 +64,16 @@ app.post('/api/deals', async (req, res) => {
     return res.status(400).json({ success: false, error: err });
   }
 });
+
+if (NODE_ENV === 'production') {
+  console.log('App running in production mode.');
+  app.use(
+    '/',
+    express.static(path.join(__dirname, '../../', 'client', 'dist'))
+  );
+  app.get('/', (req, res) => {
+    res.sendFile('/');
+  });
+}
 
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
