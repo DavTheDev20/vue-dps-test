@@ -5,7 +5,7 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const sequelize = new Sequelize('sqlite://./main.db');
+const sequelize = new Sequelize('sqlite://../server/src/database/main.db');
 
 interface DealModel {
   id: number;

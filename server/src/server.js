@@ -18,7 +18,7 @@ const cors_1 = __importDefault(require("cors"));
 const sequelize_1 = require("sequelize");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
-const sequelize = new sequelize_1.Sequelize('sqlite://./main.db');
+const sequelize = new sequelize_1.Sequelize('sqlite://../server/src/database/main.db');
 const Deal = sequelize.define('Deal', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
