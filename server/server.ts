@@ -6,8 +6,13 @@ import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const sequelize = new Sequelize('sqlite://../server/src/database/main.db');
+const PROD_DATABASE_URI = 'sqlite://server/src/database/prod.db';
+const DEV_DATABASE_URI = 'sqlite://../server/src/database/dev.db';
 const NODE_ENV = process.env.NODE_ENV || 'development';
+
+const sequelize = new Sequelize(
+  NODE_ENV === 'production' ? PROD_DATABASE_URI : DEV_DATABASE_URI
+);
 
 interface DealModel {
   id: number;

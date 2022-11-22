@@ -19,8 +19,10 @@ const sequelize_1 = require("sequelize");
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 8080;
-const sequelize = new sequelize_1.Sequelize('sqlite://../server/src/database/main.db');
+const PROD_DATABASE_URI = 'sqlite://server/src/database/prod.db';
+const DEV_DATABASE_URI = 'sqlite://../server/src/database/dev.db';
 const NODE_ENV = process.env.NODE_ENV || 'development';
+const sequelize = new sequelize_1.Sequelize(NODE_ENV === 'production' ? PROD_DATABASE_URI : DEV_DATABASE_URI);
 const Deal = sequelize.define('Deal', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
